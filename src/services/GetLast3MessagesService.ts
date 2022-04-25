@@ -12,7 +12,7 @@ class GetLast3MessagesService {
       }
     });
 
-    return messages
+    return messages;
   }
 }
 
