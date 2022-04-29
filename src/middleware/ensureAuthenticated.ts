@@ -3,7 +3,7 @@ import { verify } from "jsonwebtoken";
 
 export function ensureAuthenticated(
   request: Request, 
-  respone: Response, 
+  response: Response, 
   next: NextFunction
 ){
   const authToken = request.headers.authorization;
@@ -15,6 +15,9 @@ export function ensureAuthenticated(
   }
 
   const [, token] = authToken.split(" ");
+
+  console.log('request ', request.originalUrl)
+
   try{
     const { sub } = verify(token, process.env.JWT_SECRET);
 
@@ -22,6 +25,8 @@ export function ensureAuthenticated(
     
     return next();
   } catch(err){
-    return response.status(401).json({errorCode: "token expirado"})
+
+    
+    return response.status(401).json({errorCode: "token expirado ou incorreto"})
   }
 }
